@@ -6,7 +6,7 @@
 /*   By: umosse <umosse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 14:38:44 by umosse            #+#    #+#             */
-/*   Updated: 2024/06/06 17:21:23 by umosse           ###   ########.fr       */
+/*   Updated: 2024/06/06 17:48:57 by umosse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_philo
 	pthread_mutex_t	*rfork;
 	pthread_mutex_t	*lfork;
 	unsigned long	lastmeal;
+	int				isdead;
 }	t_philo;
 
 typedef struct s_data
@@ -41,6 +42,7 @@ typedef struct s_data
 	int				toteat;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	printmutex;
+	pthread_mutex_t	is_dead_lock;
 }	t_data;
 
 int				ft_strlen(const char *str);

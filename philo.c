@@ -6,7 +6,7 @@
 /*   By: umosse <umosse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 14:38:22 by umosse            #+#    #+#             */
-/*   Updated: 2024/06/06 17:27:35 by umosse           ###   ########.fr       */
+/*   Updated: 2024/06/06 17:51:42 by umosse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,14 @@ void	*ft_routine(t_philo *philo)
 		ft_usleep(philo->data->tte / 2);
 	while (1)
 	{
-		pthread_mutex_lock(&philo->data->printmutex);
+		pthread_mutex_lock(&philo->data->is_dead_lock);
+		if (philo->isdead == 1)
+		{
+			pthread_mutex_unlock(&philo->data->is_dead_lock);
+			break;
+		}
+		pthread_mutex_unlock(&philo->data->is_dead_lock);
+		//make a function that makes them eat and slepp
 	}
 }
 
