@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   end.c                                              :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: umosse <umosse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/05 13:56:12 by umosse            #+#    #+#             */
-/*   Updated: 2024/06/06 17:20:20 by umosse           ###   ########.fr       */
+/*   Created: 2024/06/06 17:07:28 by umosse            #+#    #+#             */
+/*   Updated: 2024/06/06 17:20:51 by umosse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	ft_end(t_data *data)
+int	ft_usleep(useconds_t time)
 {
-	int	i;
-
-	i = 0;
-	while (i < data->nphilo)
+	unsigned long	start;
+	start = ft_get_time();
+	while ((ft_get_time() - start) < time)
 	{
-		i++;
+		if (usleep(time/10) == -1)
+			return (-1);
 	}
-}
-
-int	ft_error(char *str, t_data *data)
-{
-	ft_putstr_fd(str, 2);
-	write (2, "\n", 1);
-	if (data)
-		ft_exit(data);
-	return (-1);
+	return (0);
 }
