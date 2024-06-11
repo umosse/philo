@@ -6,11 +6,51 @@
 /*   By: umosse <umosse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 14:38:22 by umosse            #+#    #+#             */
-/*   Updated: 2024/06/06 17:51:42 by umosse           ###   ########.fr       */
+/*   Updated: 2024/06/11 15:06:39 by umosse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	ft_forklock(int lock, t_philo *philo)
+{
+	if (lock == 1)
+	{
+		if (philo->id == 1)
+		{
+			pthread_mutex_lock(philo->rfork);
+			printf("");
+			pthread_mutex_lock(philo->lfork);
+			printf("");
+		}
+		else
+		{
+			pthread_mutex_lock(philo->lfork);
+			printf("");
+			pthread_mutex_lock(philo->rfork);
+			printf("");
+		}
+	}
+	else if (lock == 0)
+	{
+		pthread_mutex_unlock(philo->rfork);
+		pthread_mutex_unlock(philo->lfork);
+	}
+}
+
+void	ft_eatsleep(t_philo *philo)
+{
+	ft_forklock(1, philo);
+	printf("eating");
+	pthread_mutex_lock(&philo->data->is_eating_lock);
+	philo->eatcount++;
+	pthread_mutex_unlock(&philo->data->is_eating_lock);
+	ft_usleep(philo->data->tte);
+	ft_forklock(0, philo);
+	printf("sleeping");
+	ft_usleep(philo->data->tts);
+	printf("thinking");
+}
 
 void	*ft_routine(t_philo *philo)
 {
@@ -22,11 +62,12 @@ void	*ft_routine(t_philo *philo)
 		if (philo->isdead == 1)
 		{
 			pthread_mutex_unlock(&philo->data->is_dead_lock);
-			break;
+			break ;
 		}
 		pthread_mutex_unlock(&philo->data->is_dead_lock);
-		//make a function that makes them eat and slepp
+		ft_eatsleep(philo);
 	}
+	return (NULL);
 }
 
 int	ft_makethread(t_data *data, t_philo **philos, void *ft_routine)
@@ -36,7 +77,7 @@ int	ft_makethread(t_data *data, t_philo **philos, void *ft_routine)
 	i = 0;
 	while (i < data->nphilo)
 	{
-		if (pthread_create(&philos[i]->tid, NULL, ft_routine, philos[i]) !=0)
+		if (pthread_create(&philos[i]->tid, NULL, ft_routine, philos[i]) != 0)
 			return (-1);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: umosse <umosse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 14:38:44 by umosse            #+#    #+#             */
-/*   Updated: 2024/06/06 17:48:57 by umosse           ###   ########.fr       */
+/*   Updated: 2024/06/11 14:54:30 by umosse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@
 # include <stdlib.h>
 # include <string.h>
 # include <sys/time.h>
+# include <stdio.h>
 
+//Structures
 typedef struct s_philo
 {
 	struct s_data	*data;
@@ -43,19 +45,27 @@ typedef struct s_data
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	printmutex;
 	pthread_mutex_t	is_dead_lock;
+	pthread_mutex_t	is_eating_lock;
 }	t_data;
 
+//utils.c
 int				ft_strlen(const char *str);
 int				ft_atoi(const char *str);
 void			*ft_calloc(size_t nmemb, size_t size);
-void			ft_putstr_fd(char *s, int fd);
 unsigned long	ft_get_time(void);
-int				ft_error(char *str, t_data *data);
-t_philo			**ft_makephilo(t_data *data);
-void			ft_forks(t_data *data);
-void				ft_assignfork(t_data *data, t_philo **philos);
+void			ft_putstr_fd(char *s, int fd);
+//utils2.c
+int				ft_usleep(useconds_t time);
+//philo.c
+void			*ft_routine(t_philo *philo);
+int				ft_makethread(t_data *data, t_philo **philos, void *ft_routine);
+//end.c
 void			ft_end(t_data *data);
 int				ft_error(char *str, t_data *data);
-int				ft_usleep(useconds_t time);
+int				ft_error(char *str, t_data *data);
+//data.c
+t_philo			**ft_makephilo(t_data *data);
+void			ft_forks(t_data *data);
+void			ft_assignfork(t_data *data, t_philo **philos);
 
 #endif

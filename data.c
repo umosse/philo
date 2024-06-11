@@ -6,7 +6,7 @@
 /*   By: umosse <umosse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:32:32 by umosse            #+#    #+#             */
-/*   Updated: 2024/06/06 17:46:59 by umosse           ###   ########.fr       */
+/*   Updated: 2024/06/07 17:52:15 by umosse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 t_philo	**ft_makephilo(t_data *data)
 {
-	int	i;
+	int		i;
 	t_philo	**philos;
-	
+
 	i = 0;
 	philos = ft_calloc(data->nphilo, sizeof(t_philo *));
 	if (!philos)
