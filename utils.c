@@ -6,7 +6,7 @@
 /*   By: umosse <umosse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:46:46 by umosse            #+#    #+#             */
-/*   Updated: 2024/06/07 17:51:55 by umosse           ###   ########.fr       */
+/*   Updated: 2024/06/12 16:37:40 by umosse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ unsigned long	ft_get_time(void)
 	struct timeval	tv;
 
 	if (gettimeofday(&tv, NULL))
-		return (ft_error("Error with gettimeofday\n", NULL));
+		return (ft_error("Error with gettimeofday\n", NULL, NULL));
 	return ((tv.tv_sec * (unsigned long)1000) + (tv.tv_usec / 1000));
 }
 
