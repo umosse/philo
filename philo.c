@@ -19,14 +19,14 @@ void	ft_forklock(int lock, t_philo *philo)
 		if (philo->id == 1)
 		{
 			pthread_mutex_lock(philo->rfork);
-			printf("philo %d has taken a fork\n", philo->id);
+			printf("%lu philo %d has taken a fork\n", ft_get_time() - philo->data->start, philo->id);
 			pthread_mutex_lock(philo->lfork);
-			printf("philo %d has taken a fork\n", philo->id);
+			printf("%lu philo %d has taken a fork\n", ft_get_time() - philo->data->start, philo->id);
 		}
 		else
 		{
 			pthread_mutex_lock(philo->lfork);
-			printf("philo %d has taken a fork\n", philo->id);
+			printf("%lu philo %d has taken a fork\n", ft_get_time() - philo->data->start, philo->id);
 			pthread_mutex_lock(philo->rfork);
 			printf("%lu philo %d has taken a fork\n", ft_get_time() - philo->data->start, philo->id);
 		}
@@ -41,17 +41,17 @@ void	ft_forklock(int lock, t_philo *philo)
 void	ft_eatsleep(t_philo *philo)
 {
 	ft_forklock(1, philo);
-	printf("philo %d is eating\n", philo->id);
+	printf("%lu philo %d is eating\n", ft_get_time() - philo->data->start, philo->id);
 	pthread_mutex_lock(&philo->data->is_eating_lock);
 	philo->lastmeal = ft_get_time();
 	philo->eatcount++;
 	pthread_mutex_unlock(&philo->data->is_eating_lock);
 	ft_usleep(philo->data->tte);
 	ft_forklock(0, philo);
-	printf("philo %d is sleeping\n", philo->id);
+	printf("%lu philo %d is sleeping\n", ft_get_time() - philo->data->start, philo->id);
 	ft_usleep(philo->data->tts);
-	//ft_usleep(1);
-	printf("philo %d is thinking\n", philo->id);
+	ft_usleep(1);
+	printf("%lu philo %d is thinking\n", ft_get_time() - philo->data->start, philo->id);
 }
 
 void	*ft_routine(t_philo *philo)
@@ -95,20 +95,18 @@ int	main(int argc, char **argv)
 	data = (t_data){0};
 	if (argc >= 5 && argc <= 6)
 	{
-		data.nphilo = ft_atoi(argv[1]);
-		data.ttd = ft_atoi(argv[2]);
-		data.tte = ft_atoi(argv[3]);
-		data.tts = ft_atoi(argv[4]);
-		if (argc == 6)
-			data.toteat = ft_atoi(argv[5]);
+		if (ft_parsing(&data, argc, argv))
+			return (0);
 		philos = ft_makephilo(&data);
 		ft_forks(&data);
 		ft_assignfork(&data, philos);
 		if (ft_makethread(&data, philos, ft_routine) == -1)
-		{
 			ft_error("Error making threads\n", &data, philos);
+		while (1)
+		{
+			if (philos[data.nphilo - 1]->eatcount >= data.toteat)
+				break ;
 		}
-		while (1);
 	}
 	return (0);
 }
