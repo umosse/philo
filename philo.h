@@ -6,7 +6,7 @@
 /*   By: umosse <umosse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 14:38:44 by umosse            #+#    #+#             */
-/*   Updated: 2024/06/12 16:59:06 by umosse           ###   ########.fr       */
+/*   Updated: 2024/06/14 11:12:02 by umosse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <string.h>
 # include <sys/time.h>
 # include <stdio.h>
+# include <limits.h>
 
 //Structures
 typedef struct s_philo
@@ -57,6 +58,7 @@ unsigned long	ft_get_time(void);
 void			ft_putstr_fd(char *s, int fd);
 //utils2.c
 int				ft_usleep(useconds_t time);
+int				ft_atol(char *str);
 //philo.c
 void			ft_forklock(int lock, t_philo *philo);
 void			ft_eatsleep(t_philo *philo);

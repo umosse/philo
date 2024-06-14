@@ -6,7 +6,7 @@
 /*   By: umosse <umosse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 14:38:22 by umosse            #+#    #+#             */
-/*   Updated: 2024/06/12 16:59:38 by umosse           ###   ########.fr       */
+/*   Updated: 2024/06/14 12:11:36 by umosse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,9 @@ int	main(int argc, char **argv)
 	t_philo	**philos;
 
 	data = (t_data){0};
-	if (argc >= 5 && argc <= 6)
+	if (argc == 5 || argc == 6)
 	{
-		if (ft_parsing(&data, argc, argv))
+		if (ft_parsing(&data, argc, argv) == -1)
 			return (0);
 		philos = ft_makephilo(&data);
 		ft_forks(&data);
