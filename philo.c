@@ -6,7 +6,7 @@
 /*   By: umosse <umosse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 14:38:22 by umosse            #+#    #+#             */
-/*   Updated: 2024/06/14 12:11:36 by umosse           ###   ########.fr       */
+/*   Updated: 2024/06/17 15:18:10 by umosse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	*ft_routine(t_philo *philo)
 	while (1)
 	{
 		pthread_mutex_lock(&philo->data->is_dead_lock);
-		if (philo->isdead == 1 || philo->eatcount >= philo->data->toteat)
+		if (philo->isdead == 1 || (philo->eatcount >= philo->data->toteat && philo->data->toteat != 0))
 		{
 			pthread_mutex_unlock(&philo->data->is_dead_lock);
 			break ;
@@ -102,11 +102,7 @@ int	main(int argc, char **argv)
 		ft_assignfork(&data, philos);
 		if (ft_makethread(&data, philos, ft_routine) == -1)
 			ft_error("Error making threads\n", &data, philos);
-		while (1)
-		{
-			if (philos[data.nphilo - 1]->eatcount >= data.toteat)
-				break ;
-		}
+		ft_loop(argc, &data, philos);
 	}
 	return (0);
 }

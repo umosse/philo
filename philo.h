@@ -6,7 +6,7 @@
 /*   By: umosse <umosse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 14:38:44 by umosse            #+#    #+#             */
-/*   Updated: 2024/06/14 11:12:02 by umosse           ###   ########.fr       */
+/*   Updated: 2024/06/17 15:40:29 by umosse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ typedef struct s_philo
 typedef struct s_data
 {
 	int				nphilo;
-	int				ttd;
-	int				tte;
-	int				tts;
+	unsigned int	ttd;
+	unsigned int	tte;
+	unsigned int	tts;
 	int				toteat;
-	unsigned long				start;
+	unsigned long	start;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	printmutex;
 	pthread_mutex_t	is_dead_lock;
@@ -64,6 +64,8 @@ void			ft_forklock(int lock, t_philo *philo);
 void			ft_eatsleep(t_philo *philo);
 void			*ft_routine(t_philo *philo);
 int				ft_makethread(t_data *data, t_philo **philos, void *ft_routine);
+//loop.c
+void			ft_loop(int argc, t_data *data, t_philo **philos);
 //end.c
 void			ft_end(t_data *data, t_philo **philos);
 int				ft_error(char *str, t_data *data, t_philo **philos);
