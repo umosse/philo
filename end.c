@@ -6,7 +6,7 @@
 /*   By: umosse <umosse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 13:56:12 by umosse            #+#    #+#             */
-/*   Updated: 2024/06/12 16:38:39 by umosse           ###   ########.fr       */
+/*   Updated: 2024/06/18 17:44:05 by umosse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,7 @@ void	ft_end(t_data *data, t_philo **philos)
 		pthread_mutex_destroy(&data->forks[i]);
 		i++;
 	}
-	pthread_mutex_destroy(&data->is_dead_lock);
-	pthread_mutex_destroy(&data->is_eating_lock);
-	pthread_mutex_destroy(&data->printmutex);
+	pthread_mutex_destroy(&data->lock);
 	ft_freeall(data, philos);
 }
 

@@ -6,7 +6,7 @@
 /*   By: umosse <umosse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:32:32 by umosse            #+#    #+#             */
-/*   Updated: 2024/06/07 17:52:15 by umosse           ###   ########.fr       */
+/*   Updated: 2024/06/18 17:43:57 by umosse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ void	ft_forks(t_data *data)
 		pthread_mutex_init(&data->forks[i], NULL);
 		i++;
 	}
-	pthread_mutex_init(&data->printmutex, NULL);
-	pthread_mutex_init(&data->is_dead_lock, NULL);
+	pthread_mutex_init(&data->lock, NULL);
 }
 
 void	ft_assignfork(t_data *data, t_philo **philos)

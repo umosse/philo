@@ -6,7 +6,7 @@
 /*   By: umosse <umosse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 14:38:22 by umosse            #+#    #+#             */
-/*   Updated: 2024/06/17 15:18:10 by umosse           ###   ########.fr       */
+/*   Updated: 2024/06/18 17:46:01 by umosse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,24 @@ void	ft_forklock(int lock, t_philo *philo)
 		if (philo->id == 1)
 		{
 			pthread_mutex_lock(philo->rfork);
+			pthread_mutex_lock(&philo->data->lock);
 			printf("%lu philo %d has taken a fork\n", ft_get_time() - philo->data->start, philo->id);
+			pthread_mutex_unlock(&philo->data->lock);
 			pthread_mutex_lock(philo->lfork);
+			pthread_mutex_lock(&philo->data->lock);
 			printf("%lu philo %d has taken a fork\n", ft_get_time() - philo->data->start, philo->id);
+			pthread_mutex_unlock(&philo->data->lock);
 		}
 		else
 		{
 			pthread_mutex_lock(philo->lfork);
+			pthread_mutex_lock(&philo->data->lock);
 			printf("%lu philo %d has taken a fork\n", ft_get_time() - philo->data->start, philo->id);
+			pthread_mutex_unlock(&philo->data->lock);
 			pthread_mutex_lock(philo->rfork);
+			pthread_mutex_lock(&philo->data->lock);
 			printf("%lu philo %d has taken a fork\n", ft_get_time() - philo->data->start, philo->id);
+			pthread_mutex_unlock(&philo->data->lock);
 		}
 	}
 	else if (lock == 0)
@@ -41,17 +49,22 @@ void	ft_forklock(int lock, t_philo *philo)
 void	ft_eatsleep(t_philo *philo)
 {
 	ft_forklock(1, philo);
-	printf("%lu philo %d is eating\n", ft_get_time() - philo->data->start, philo->id);
-	pthread_mutex_lock(&philo->data->is_eating_lock);
+	pthread_mutex_lock(&philo->data->lock);
+	if (philo->data->stop == 0)
+		printf("%lu philo %d is eating\n", ft_get_time() - philo->data->start, philo->id);
+	pthread_mutex_unlock(&philo->data->lock);
+	pthread_mutex_lock(&philo->data->lock);
 	philo->lastmeal = ft_get_time();
 	philo->eatcount++;
-	pthread_mutex_unlock(&philo->data->is_eating_lock);
+	pthread_mutex_unlock(&philo->data->lock);
 	ft_usleep(philo->data->tte);
 	ft_forklock(0, philo);
-	printf("%lu philo %d is sleeping\n", ft_get_time() - philo->data->start, philo->id);
+	pthread_mutex_lock(&philo->data->lock);
+	if (philo->data->stop == 0)
+		printf("%lu philo %d is sleeping\n", ft_get_time() - philo->data->start, philo->id);
+	pthread_mutex_unlock(&philo->data->lock);
 	ft_usleep(philo->data->tts);
-	ft_usleep(1);
-	printf("%lu philo %d is thinking\n", ft_get_time() - philo->data->start, philo->id);
+	//ft_usleep(1);
 }
 
 void	*ft_routine(t_philo *philo)
@@ -60,14 +73,18 @@ void	*ft_routine(t_philo *philo)
 		ft_usleep(philo->data->tte / 2);
 	while (1)
 	{
-		pthread_mutex_lock(&philo->data->is_dead_lock);
-		if (philo->isdead == 1 || (philo->eatcount >= philo->data->toteat && philo->data->toteat != 0))
+		pthread_mutex_lock(&philo->data->lock);
+		if (philo->data->stop == 1 || (philo->eatcount >= philo->data->toteat && philo->data->toteat != 0))
 		{
-			pthread_mutex_unlock(&philo->data->is_dead_lock);
+			pthread_mutex_unlock(&philo->data->lock);
 			break ;
 		}
-		pthread_mutex_unlock(&philo->data->is_dead_lock);
+		pthread_mutex_unlock(&philo->data->lock);
 		ft_eatsleep(philo);
+		pthread_mutex_lock(&philo->data->lock);
+		if (philo->data->stop == 0)
+			printf("%lu philo %d is thinking\n", ft_get_time() - philo->data->start, philo->id);
+		pthread_mutex_unlock(&philo->data->lock);
 	}
 	return (NULL);
 }
@@ -103,6 +120,7 @@ int	main(int argc, char **argv)
 		if (ft_makethread(&data, philos, ft_routine) == -1)
 			ft_error("Error making threads\n", &data, philos);
 		ft_loop(argc, &data, philos);
+		ft_jointhread(philos);
 	}
 	return (0);
 }
