@@ -6,7 +6,7 @@
 /*   By: umosse <umosse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 13:56:12 by umosse            #+#    #+#             */
-/*   Updated: 2024/06/18 17:44:05 by umosse           ###   ########.fr       */
+/*   Updated: 2024/06/21 11:15:53 by umosse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ void	ft_freeall(t_data *data, t_philo **philos)
 	i = 0;
 	if (data->forks)
 	{
-		data->forks = NULL;
 		free (data->forks);
+		data->forks = NULL;
 	}
 	while (i < data->nphilo)
 	{
 		if (philos)
 		{
-			philos[i] = NULL;
 			free (philos[i]);
+			philos[i] = NULL;
 		}
 		i++;
 	}

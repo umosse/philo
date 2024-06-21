@@ -6,7 +6,7 @@
 /*   By: umosse <umosse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:07:28 by umosse            #+#    #+#             */
-/*   Updated: 2024/06/18 17:19:13 by umosse           ###   ########.fr       */
+/*   Updated: 2024/06/21 11:26:10 by umosse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,32 @@ int	ft_atol(char *str)
 		i++;
 	}
 	return (1);
+}
+
+void	ft_fork1(t_philo *philo)
+{
+	pthread_mutex_lock(philo->rfork);
+	pthread_mutex_lock(&philo->data->lock);
+	printf("%lu philo %d has taken a fork\n",
+		ft_get_time() - philo->data->start, philo->id);
+	pthread_mutex_unlock(&philo->data->lock);
+	pthread_mutex_lock(philo->lfork);
+	pthread_mutex_lock(&philo->data->lock);
+	printf("%lu philo %d has taken a fork\n",
+		ft_get_time() - philo->data->start, philo->id);
+	pthread_mutex_unlock(&philo->data->lock);
+}
+
+void	ft_fork2(t_philo *philo)
+{
+	pthread_mutex_lock(philo->lfork);
+	pthread_mutex_lock(&philo->data->lock);
+	printf("%lu philo %d has taken a fork\n",
+		ft_get_time() - philo->data->start, philo->id);
+	pthread_mutex_unlock(&philo->data->lock);
+	pthread_mutex_lock(philo->rfork);
+	pthread_mutex_lock(&philo->data->lock);
+	printf("%lu philo %d has taken a fork\n",
+		ft_get_time() - philo->data->start, philo->id);
+	pthread_mutex_unlock(&philo->data->lock);
 }

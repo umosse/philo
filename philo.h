@@ -6,7 +6,7 @@
 /*   By: umosse <umosse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 14:38:44 by umosse            #+#    #+#             */
-/*   Updated: 2024/06/18 17:42:48 by umosse           ###   ########.fr       */
+/*   Updated: 2024/06/21 11:26:33 by umosse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void			ft_putstr_fd(char *s, int fd);
 //utils2.c
 int				ft_usleep(useconds_t time);
 int				ft_atol(char *str);
+void			ft_fork1(t_philo *philo);
+void			ft_fork2(t_philo *philo);
 //philo.c
 void			ft_forklock(int lock, t_philo *philo);
 void			ft_eatsleep(t_philo *philo);

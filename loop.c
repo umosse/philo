@@ -6,7 +6,7 @@
 /*   By: umosse <umosse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 15:14:01 by umosse            #+#    #+#             */
-/*   Updated: 2024/06/18 17:46:52 by umosse           ###   ########.fr       */
+/*   Updated: 2024/06/21 16:53:34 by umosse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,29 @@ void	ft_loop(int argc, t_data *data, t_philo **philos)
 
 	while (1)
 	{
+		usleep(500);
 		i = 0;
 		ft_deathcheck(data, philos);
+		pthread_mutex_lock(&data->lock);
 		if (philos[data->nphilo - 1]->eatcount >= data->toteat && argc == 6)
+		{
+			pthread_mutex_unlock(&data->lock);
 			break ;
+		}
+		pthread_mutex_unlock(&data->lock);
 		while (i < data->nphilo)
 		{
 			if (philos[i]->isdead == 1)
 			{
 				pthread_mutex_lock(&data->lock);
-				printf("%lu philo %d died\n", ft_get_time() - data->start, philos[i]->id);
+				printf("%lu philo %d died\n",
+					ft_get_time() - data->start, philos[i]->id);
 				pthread_mutex_unlock(&data->lock);
 				return ;
 			}
 			i++;
 		}
+		usleep(500);
 	}
 }
 
