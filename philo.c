@@ -53,6 +53,8 @@ void	ft_eatsleep(t_philo *philo)
 
 void	*ft_routine(t_philo *philo)
 {
+	if (philo->data->nphilo == 1)
+		return (ft_onephilo(philo));
 	if (philo->id % 2 == 0)
 		ft_usleep(philo->data->tte / 2);
 	while (1)

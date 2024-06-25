@@ -66,6 +66,8 @@ void			ft_eatsleep(t_philo *philo);
 void			*ft_routine(t_philo *philo);
 int				ft_makethread(t_data *data, t_philo **philos, void *ft_routine);
 //loop.c
+void			*ft_onephilo(t_philo *philo);
+int				ft_deathcheck(t_data *data, t_philo **philos);
 void			ft_loop(int argc, t_data *data, t_philo **philos);
 void			ft_jointhread(t_philo **philos);
 //end.c

@@ -12,6 +12,14 @@
 
 #include "philo.h"
 
+void	*ft_onephilo(t_philo *philo)
+{
+	printf("%lu philo %d has taken a fork\n",
+		ft_get_time() - philo->data->start, philo->id);
+	ft_usleep(philo->data->ttd);
+	return (NULL);
+}
+
 int	ft_deathcheck(t_data *data, t_philo **philos)
 {
 	int				i;
