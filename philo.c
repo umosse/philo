@@ -6,7 +6,7 @@
 /*   By: umosse <umosse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 14:38:22 by umosse            #+#    #+#             */
-/*   Updated: 2024/06/21 16:54:16 by umosse           ###   ########.fr       */
+/*   Updated: 2024/06/26 15:47:18 by umosse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,11 @@ void	ft_eatsleep(t_philo *philo)
 			ft_get_time() - philo->data->start, philo->id);
 	pthread_mutex_unlock(&philo->data->lock);
 	ft_usleep(philo->data->tts);
-	//ft_usleep(1);
+	if (philo->data->tts < philo->data->tte
+		&& (philo->data->ttd > (philo->data->tts + philo->data->tte)))
+		ft_usleep(philo->data->tte - philo->data->tts);
+	else
+		ft_usleep(1);
 }
 
 void	*ft_routine(t_philo *philo)

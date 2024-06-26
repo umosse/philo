@@ -6,7 +6,7 @@
 /*   By: umosse <umosse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 15:14:01 by umosse            #+#    #+#             */
-/*   Updated: 2024/06/21 16:53:34 by umosse           ###   ########.fr       */
+/*   Updated: 2024/06/26 15:32:51 by umosse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 void	*ft_onephilo(t_philo *philo)
 {
+	pthread_mutex_lock(&philo->data->lock);
 	printf("%lu philo %d has taken a fork\n",
 		ft_get_time() - philo->data->start, philo->id);
+	pthread_mutex_unlock(&philo->data->lock);
 	ft_usleep(philo->data->ttd);
 	return (NULL);
 }
@@ -30,7 +32,7 @@ int	ft_deathcheck(t_data *data, t_philo **philos)
 	{
 		pthread_mutex_lock(&data->lock);
 		time = ft_get_time();
-		if (time - philos[i]->lastmeal > data->ttd)
+		if (time - philos[i]->lastmeal >= data->ttd)
 		{
 			philos[i]->isdead = 1;
 			philos[i]->data->stop = 1;

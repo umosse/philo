@@ -6,7 +6,7 @@
 /*   By: umosse <umosse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:07:28 by umosse            #+#    #+#             */
-/*   Updated: 2024/06/21 11:26:10 by umosse           ###   ########.fr       */
+/*   Updated: 2024/06/26 11:02:18 by umosse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,15 @@ void	ft_fork1(t_philo *philo)
 {
 	pthread_mutex_lock(philo->rfork);
 	pthread_mutex_lock(&philo->data->lock);
-	printf("%lu philo %d has taken a fork\n",
-		ft_get_time() - philo->data->start, philo->id);
+	if (philo->data->stop == 0)
+		printf("%lu philo %d has taken a fork\n",
+			ft_get_time() - philo->data->start, philo->id);
 	pthread_mutex_unlock(&philo->data->lock);
 	pthread_mutex_lock(philo->lfork);
 	pthread_mutex_lock(&philo->data->lock);
-	printf("%lu philo %d has taken a fork\n",
-		ft_get_time() - philo->data->start, philo->id);
+	if (philo->data->stop == 0)
+		printf("%lu philo %d has taken a fork\n",
+			ft_get_time() - philo->data->start, philo->id);
 	pthread_mutex_unlock(&philo->data->lock);
 }
 
@@ -72,12 +74,14 @@ void	ft_fork2(t_philo *philo)
 {
 	pthread_mutex_lock(philo->lfork);
 	pthread_mutex_lock(&philo->data->lock);
-	printf("%lu philo %d has taken a fork\n",
-		ft_get_time() - philo->data->start, philo->id);
+	if (philo->data->stop == 0)
+		printf("%lu philo %d has taken a fork\n",
+			ft_get_time() - philo->data->start, philo->id);
 	pthread_mutex_unlock(&philo->data->lock);
 	pthread_mutex_lock(philo->rfork);
 	pthread_mutex_lock(&philo->data->lock);
-	printf("%lu philo %d has taken a fork\n",
-		ft_get_time() - philo->data->start, philo->id);
+	if (philo->data->stop == 0)
+		printf("%lu philo %d has taken a fork\n",
+			ft_get_time() - philo->data->start, philo->id);
 	pthread_mutex_unlock(&philo->data->lock);
 }
