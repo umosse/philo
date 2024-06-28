@@ -75,7 +75,7 @@ void			ft_end(t_data *data, t_philo **philos);
 int				ft_error(char *str, t_data *data, t_philo **philos);
 //data.c
 t_philo			**ft_makephilo(t_data *data);
-void			ft_forks(t_data *data);
+int				ft_forks(t_data *data);
 void			ft_assignfork(t_data *data, t_philo **philos);
 //parsing.c
 int				ft_parsing(t_data *data, int argc, char **argv);

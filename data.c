@@ -24,6 +24,8 @@ t_philo	**ft_makephilo(t_data *data)
 	while (i < data->nphilo)
 	{
 		philos[i] = ft_calloc(1, sizeof(t_philo));
+		if (!philos[i])
+			return (NULL);
 		philos[i]->data = data;
 		philos[i]->lastmeal = ft_get_time();
 		philos[i]->id = i + 1;
@@ -32,20 +34,21 @@ t_philo	**ft_makephilo(t_data *data)
 	return (philos);
 }
 
-void	ft_forks(t_data *data)
+int	ft_forks(t_data *data)
 {
 	int	i;
 
 	i = 0;
 	data->forks = ft_calloc(data->nphilo, sizeof(pthread_mutex_t));
 	if (!data->forks)
-		return ;
+		return (-1);
 	while (i < data->nphilo)
 	{
 		pthread_mutex_init(&data->forks[i], NULL);
 		i++;
 	}
 	pthread_mutex_init(&data->lock, NULL);
+	return (0);
 }
 
 void	ft_assignfork(t_data *data, t_philo **philos)

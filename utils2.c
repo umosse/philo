@@ -37,7 +37,7 @@ int	ft_atol(char *str)
 	if (str[i] == '+' || str[i] == '-')
 	{
 		if (str[i] == '-')
-			sign *= -1;
+			return (-1);
 		i++;
 	}
 	while (str[i])

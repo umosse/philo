@@ -50,7 +50,7 @@ void	ft_eatsleep(t_philo *philo)
 	ft_usleep(philo->data->tts);
 	if (philo->data->tts < philo->data->tte
 		&& (philo->data->ttd > (philo->data->tts + philo->data->tte)))
-		ft_usleep(philo->data->tte - philo->data->tts);
+		ft_usleep(philo->data->tte - philo->data->tts + 1);
 	else
 		ft_usleep(1);
 }
@@ -106,11 +106,14 @@ int	main(int argc, char **argv)
 	{
 		if (ft_parsing(&data, argc, argv) == -1)
 			return (0);
-		philos = ft_makephilo(&data);
-		ft_forks(&data);
+		if (!(philos = ft_makephilo(&data)))
+			return (0);
+		if (ft_forks(&data) == -1)
+			return (0);
 		ft_assignfork(&data, philos);
 		if (ft_makethread(&data, philos, ft_routine) == -1)
-			ft_error("Error making threads\n", &data, philos);
+			//ft_error("Error making threads\n", &data, philos);
+			return (0);
 		ft_loop(argc, &data, philos);
 		ft_jointhread(philos);
 		ft_end(&data, philos);
