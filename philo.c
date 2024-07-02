@@ -6,7 +6,7 @@
 /*   By: umosse <umosse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 14:38:22 by umosse            #+#    #+#             */
-/*   Updated: 2024/06/26 15:47:18 by umosse           ###   ########.fr       */
+/*   Updated: 2024/07/02 14:14:08 by umosse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,13 +106,13 @@ int	main(int argc, char **argv)
 	{
 		if (ft_parsing(&data, argc, argv) == -1)
 			return (0);
-		if (!(philos = ft_makephilo(&data)))
+		philos = ft_makephilo(&data);
+		if (!philos)
 			return (0);
 		if (ft_forks(&data) == -1)
 			return (0);
 		ft_assignfork(&data, philos);
 		if (ft_makethread(&data, philos, ft_routine) == -1)
-			//ft_error("Error making threads\n", &data, philos);
 			return (0);
 		ft_loop(argc, &data, philos);
 		ft_jointhread(philos);

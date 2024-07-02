@@ -6,7 +6,7 @@
 /*   By: umosse <umosse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 15:14:01 by umosse            #+#    #+#             */
-/*   Updated: 2024/06/26 15:32:51 by umosse           ###   ########.fr       */
+/*   Updated: 2024/07/02 14:16:25 by umosse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,30 @@ int	ft_deathcheck(t_data *data, t_philo **philos)
 	return (0);
 }
 
-void	ft_loop(int argc, t_data *data, t_philo **philos)
+void	ft_loop2(t_data *data, t_philo **philos)
 {
 	int	i;
 
+	i = 0;
+	while (i < data->nphilo)
+	{
+		if (philos[i]->isdead == 1)
+		{
+			pthread_mutex_lock(&data->lock);
+			printf("%lu philo %d died\n",
+				ft_get_time() - data->start, philos[i]->id);
+			pthread_mutex_unlock(&data->lock);
+			return ;
+		}
+		i++;
+	}
+}
+
+void	ft_loop(int argc, t_data *data, t_philo **philos)
+{
 	while (1)
 	{
 		usleep(500);
-		i = 0;
 		ft_deathcheck(data, philos);
 		pthread_mutex_lock(&data->lock);
 		if (philos[data->nphilo - 1]->eatcount >= data->toteat && argc == 6)
@@ -61,18 +77,7 @@ void	ft_loop(int argc, t_data *data, t_philo **philos)
 			break ;
 		}
 		pthread_mutex_unlock(&data->lock);
-		while (i < data->nphilo)
-		{
-			if (philos[i]->isdead == 1)
-			{
-				pthread_mutex_lock(&data->lock);
-				printf("%lu philo %d died\n",
-					ft_get_time() - data->start, philos[i]->id);
-				pthread_mutex_unlock(&data->lock);
-				return ;
-			}
-			i++;
-		}
+		ft_loop2(data, philos);
 		usleep(500);
 	}
 }

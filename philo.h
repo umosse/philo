@@ -6,7 +6,7 @@
 /*   By: umosse <umosse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 14:38:44 by umosse            #+#    #+#             */
-/*   Updated: 2024/06/21 11:26:33 by umosse           ###   ########.fr       */
+/*   Updated: 2024/07/02 14:16:43 by umosse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int				ft_makethread(t_data *data, t_philo **philos, void *ft_routine);
 //loop.c
 void			*ft_onephilo(t_philo *philo);
 int				ft_deathcheck(t_data *data, t_philo **philos);
+void			ft_loop2(t_data *data, t_philo **philos);
 void			ft_loop(int argc, t_data *data, t_philo **philos);
 void			ft_jointhread(t_philo **philos);
 //end.c
